@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import axios from 'axios';
 
 export const useFetchStore = defineStore('fetch', () => {
-    const answer = ref([]);
+    const answer = ref({});
     const isLoading = ref(true);
 
     const useFetch = async () => {

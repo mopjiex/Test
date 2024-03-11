@@ -1,5 +1,4 @@
 <script setup>
-import axios from 'axios';
 import { onMounted, ref, computed } from 'vue';
 import { useFetchStore } from '@/store/store.js';
 import myHeader from '@/components/Header.vue';
