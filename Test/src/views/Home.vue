@@ -1,26 +1,26 @@
 <script setup>
-import { onMounted, ref, computed } from 'vue';
+import axios from 'axios';
+import { onMounted, ref, watch, computed } from 'vue';
 import { useFetchStore } from '@/store/store.js';
 import myHeader from '@/components/Header.vue';
 import myAnswer from '@/components/Answer.vue';
 import myFooter from '@/components/Footer.vue';
 
 const store = useFetchStore();
-const selectedAnswer = ref('A');
+const selectedOption = ref('A');
 
-const answerTask = computed(() => store.answer.task_text);
-const answerConditions = computed(() => store.answer.task_conditions);
-const answerImage = computed(() => store.answer.task_image);
-const answerCorrect = computed(() => store.answer.correct_answer);
-const answerOptions = computed(() => store.answer.answer_options)
-
+const answer = computed(() => store.answer[0]);
+const answerTask = computed(() => store.answer[0].task_text);
+const answerConditions = computed(() => store.answer[0].task_conditions);
+const answerImage = computed(() => store.answer[0].task_image);
+const answerCorrect = computed(() => store.answer[0].correct_answer);
 
 const checkCorrectAnswer = () => {
-    if (answerCorrect.value === selectedAnswer.value) {
+    if (answerCorrect.value === selectedOption.value) {
         alert('Верно');
     }
-    else alert('Неверно');
-    selectedAnswer.value = 'A';
+    else alert('Не верно');
+    selectedOption.value = 'A';
 }
 
 
@@ -30,13 +30,12 @@ onMounted(store.useFetch);
 
 <template>
 
-    <div class="loading" v-if="store.isLoading">Загрузка</div>
+    <div class="loading" v-if="store.isLoading"></div>
 
-    <div class="" v-else>
+    <div class="a" v-else>
         <myHeader :task="answerTask" :condition="answerConditions" />
         <myAnswer :image="answerImage" />
-        <myFooter :options="answerOptions" @answerChecked="checkCorrectAnswer"
-            v-model:selectedAnswer="selectedAnswer" />
+        <myFooter :Answers="answer" @checkWin="checkCorrectAnswer" v-model:selectedOption="selectedOption" />
     </div>
 
 </template>

@@ -2,14 +2,14 @@
 import { ref } from 'vue';
 
 const props = defineProps({
-    options: Array,
+    Answers: Object
 });
+const selectedOption = defineModel('selectedOption');
 
-const selectedAnswer = defineModel('selectedAnswer');
-const emit = defineEmits(['answerChecked']);
+const emit = defineEmits(['checkWin']);
 
-const checkAnswer = () => {
-    emit('answerChecked');
+const a = () => {
+    emit('checkWin');
 }
 </script>
 
@@ -17,13 +17,13 @@ const checkAnswer = () => {
 <template>
     <footer class="footer p-3">
         <div class="footer-content row align-items-center text-center">
-            <div class="col" v-for="option in  options" :key="option.id">
-                <input v-model="selectedAnswer" type="radio" class="btn-check" name="answer" :value="option.value"
-                    :id="option.value" autocomplete="off">
-                <label class="footer-label btn btn-outline-secondary" :for="option.value">{{ option.option }}</label>
+            <div class="col" v-for="answer in Answers.answer_options" :key="answer.id">
+                <input v-model="selectedOption" type="radio" class="btn-check" name="answer" :value="answer.value"
+                    :id="answer.value" autocomplete="off">
+                <label class="footer-label btn btn-outline-secondary" :for="answer.value">{{ answer.option }}</label>
             </div>
             <div class="col">
-                <button class="footer-btn btn btn-primary" @click="checkAnswer">Check</button>
+                <button class="footer-btn btn btn-primary" @click="a">Check</button>
             </div>
 
         </div>
@@ -43,8 +43,9 @@ const checkAnswer = () => {
     width: 100%;
 }
 
+
 .footer-btn {
-    width: 70%;
+    width: 50%;
 }
 
 .form-check-label {
